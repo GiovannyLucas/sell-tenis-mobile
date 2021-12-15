@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ProductsPage } from '../screens/products';
+import { ProductDetailsPage } from '../screens/productDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,11 @@ export default function AppRoutes() {
         name="Home"
         component={ProductsPage}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetailsPage}
+        options={({ route }) => ({ id: route.params?.id, headerShown: false })}
       />
     </Stack.Navigator>
   );

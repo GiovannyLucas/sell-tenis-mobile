@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -16,6 +17,8 @@ import {
 import { styles } from './styles';
 
 export const ProductsPage = () => {
+  const navigation = useNavigation();
+
   const [filters, setFilters] = useState<FilterProducts>({});
   const [products, setProducts] = useState<Product[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
@@ -102,7 +105,13 @@ export const ProductsPage = () => {
       <ScrollView>
         <View style={styles.productsBox}>
           {products.map((product, key) => (
-            <TouchableOpacity style={styles.productBox} key={key}>
+            <TouchableOpacity
+              style={styles.productBox}
+              key={key}
+              onPress={() =>
+                //@ts-ignore
+                navigation.navigate('ProductDetails', { id: product.id })
+              }>
               <Image
                 source={{
                   uri: product.url_image,

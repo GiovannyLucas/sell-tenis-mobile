@@ -39,3 +39,14 @@ export const getProducts = (filters?: FilterProducts) => {
       .catch(reject);
   });
 };
+
+export const getProductById = (id: string) => {
+  return new Promise<Product>((resolve, reject) => {
+    api
+      .get<Product>(`/products/${id}`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(reject);
+  });
+};
