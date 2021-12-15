@@ -1,10 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
-import { FilterProductsDTO } from '../../dtos/FilterProductsDTO';
 import { ProductsRepositoryInMemory } from '../../repositories/in-memory/ProductsRepositoryInMemory';
 import { ShowProductUseCase } from './ShowProduct.useCase';
 
-describe('Find Products Use Case', () => {
+describe('Show Product Use Case', () => {
   let productsRepositoryInMemory: ProductsRepositoryInMemory;
   let showProductUseCase: ShowProductUseCase;
 
