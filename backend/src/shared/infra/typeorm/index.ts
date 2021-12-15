@@ -5,7 +5,7 @@ export const database: TypeOrmModuleOptions = {
   type: 'postgres',
   port: Number(process.env.DB_PORT) || 5432,
   host: process.env.DB_HOST || 'localhost',
-  username: process.env.DB_USER || 'giovanny',
+  username: process.env.DB_USER || 'developer',
   password: process.env.DB_PASS || 'dv1010aa',
   database: process.env.DB_NAME || 'certsys_test',
   entities: [
@@ -22,20 +22,20 @@ export const database: TypeOrmModuleOptions = {
       '*',
     ),
   ],
-  // migrations: [
-  //   resolve(__dirname, '..', 'shared', 'infra', 'typeorm', 'migrations', '*'),
-  // ],
-  // cli: {
-  //   migrationsDir: resolve(
-  //     __dirname,
-  //     '..',
-  //     'shared',
-  //     'infra',
-  //     'typeorm',
-  //     'migrations',
-  //   ),
-  // },
-  // migrationsRun: true,
-  synchronize: true,
+  migrations: [
+    resolve(__dirname, '..', 'shared', 'infra', 'typeorm', 'migrations', '*'),
+  ],
+  cli: {
+    migrationsDir: resolve(
+      __dirname,
+      '..',
+      'shared',
+      'infra',
+      'typeorm',
+      'migrations',
+    ),
+  },
+  migrationsRun: true,
+  synchronize: process.env.DB_SYNC === 'true' || true,
   logging: ['error', 'warn'],
 };
