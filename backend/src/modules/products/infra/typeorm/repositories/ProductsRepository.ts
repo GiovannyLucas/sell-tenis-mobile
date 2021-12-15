@@ -13,7 +13,12 @@ export class ProductsRepository implements IProductsRepository {
 
   async find(
     filters?: FilterProductsDTO,
-  ): Promise<{ products: Product[]; total: number }> {
+  ): Promise<{
+    products: Product[];
+    total: number;
+    categories: string[];
+    brands: string[];
+  }> {
     const name: string = filters?.name || '';
     const description: string = filters?.description || '';
     const brand: string = filters?.brand || '';
@@ -48,14 +53,19 @@ export class ProductsRepository implements IProductsRepository {
       .orderBy({ name: 'ASC' })
       .getManyAndCount();
 
-    return { products, total };
-  }
+    const categories = await this.repository
+      .createQueryBuilder()
+      .distinct()
+      .select('categories')
+      .getRawOne();
 
-  findDistinctCategoriesAndBrands(): Promise<{
-    categories: string[];
-    brands: string[];
-  }> {
-    throw new Error('Method not implemented.');
+    const brands = await this.repository
+      .createQueryBuilder()
+      .distinct()
+      .select('brand')
+      .getRawOne();
+
+    return { products, total, categories, brands };
   }
 
   show(id: string): Promise<Product> {

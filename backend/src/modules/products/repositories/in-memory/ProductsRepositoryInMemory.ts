@@ -54,7 +54,12 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
 
   async find(
     filters?: FilterProductsDTO,
-  ): Promise<{ products: Product[]; total: number }> {
+  ): Promise<{
+    products: Product[];
+    total: number;
+    categories: string[];
+    brands: string[];
+  }> {
     const name: string | null = filters?.name || null;
     const description: string | null = filters?.description || null;
     const brand: string | null = filters?.brand || null;
@@ -73,14 +78,13 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
         product.brand === brand || product.categories.includes(category),
     );
 
-    return { products, total: products.length };
-  }
+    const categories = this.products
+      .map((product) => product.categories)
+      .flat();
 
-  findDistinctCategoriesAndBrands(): Promise<{
-    categories: string[];
-    brands: string[];
-  }> {
-    throw new Error('Method not implemented.');
+    const brands = this.products.map((product) => product.brand).flat();
+
+    return { products, total: products.length, categories, brands };
   }
 
   show(id: string): Promise<Product> {
