@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,51 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import {
+  FilterProducts,
+  getProducts,
+  Product,
+} from '../../services/api/products';
 import { styles } from './styles';
 
 export const ProductsPage = () => {
+  const [filters, setFilters] = useState<FilterProducts>({});
+  const [products, setProducts] = useState<Product[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [, setTotal] = useState<number>(0);
+
+  useEffect(() => {
+    async function call() {
+      try {
+        const data = await getProducts(filters);
+
+        setProducts(data.products);
+        setBrands(data.brands);
+        setCategories(data.categories);
+        setTotal(data.total);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    call();
+  }, [filters]);
+
   return (
     <View>
       <View style={styles.filterBox}>
         <Icon name="search" size={24} />
-        <TextInput style={styles.searchInput} placeholder="Pesquisar..." />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Pesquisar..."
+          onChangeText={text => {
+            setFilters({
+              ...filters,
+              name: text,
+            });
+          }}
+        />
         <Icon name="sliders" size={24} style={styles.settingsIcon} />
       </View>
 
@@ -23,110 +60,59 @@ export const ProductsPage = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.categoriesBox}>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Novo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Usado</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Lançamento</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Promocional</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Novo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Usado</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Lançamento</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryButton}>
-          <Text>Promocional</Text>
-        </TouchableOpacity>
+        {categories.map((category, key) => (
+          <TouchableOpacity
+            key={key}
+            style={
+              filters.category === category
+                ? styles.selectedCategoryButton
+                : styles.categoryButton
+            }
+            onPress={() =>
+              setFilters({
+                ...filters,
+                category: filters.category === category ? undefined : category,
+              })
+            }>
+            <Text>{category}</Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
 
       <ScrollView horizontal style={styles.brandsBox}>
-        <TouchableOpacity style={styles.selectedBrandButton}>
-          <Text style={styles.brandText}>Nike</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.brandButton}>
-          <Text style={styles.brandText}>Adidas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.brandButton}>
-          <Text style={styles.brandText}>Nike</Text>
-        </TouchableOpacity>
+        {brands.map((brand, key) => (
+          <TouchableOpacity
+            key={key}
+            style={
+              filters.brand === brand
+                ? styles.selectedBrandButton
+                : styles.brandButton
+            }
+            onPress={() =>
+              setFilters({
+                ...filters,
+                brand: filters.brand === brand ? undefined : brand,
+              })
+            }>
+            <Text style={styles.brandText}>{brand}</Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
 
       <ScrollView>
         <View style={styles.productsBox}>
-          <TouchableOpacity style={styles.productBox}>
-            <Image
-              source={{
-                uri: 'https://raw.githubusercontent.com/Josimar16/teste-fullstack-mobile/main/images/1%20–%201.png',
-              }}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>
-              Air Jordan 5 Retro 'Raging Bulls' Red 2021
-            </Text>
-            <Text style={styles.productAmount}>R$ 820,00</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.productBox}>
-            <Image
-              source={{
-                uri: 'https://raw.githubusercontent.com/Josimar16/teste-fullstack-mobile/main/images/1%20–%201.png',
-              }}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>
-              Air Jordan 5 Retro 'Raging Bulls' Red 2021
-            </Text>
-            <Text style={styles.productAmount}>R$ 820,00</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.productBox}>
-            <Image
-              source={{
-                uri: 'https://raw.githubusercontent.com/Josimar16/teste-fullstack-mobile/main/images/1%20–%201.png',
-              }}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>
-              Air Jordan 5 Retro 'Raging Bulls' Red 2021
-            </Text>
-            <Text style={styles.productAmount}>R$ 820,00</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.productBox}>
-            <Image
-              source={{
-                uri: 'https://raw.githubusercontent.com/Josimar16/teste-fullstack-mobile/main/images/1%20–%201.png',
-              }}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>
-              Air Jordan 5 Retro 'Raging Bulls' Red 2021
-            </Text>
-            <Text style={styles.productAmount}>R$ 820,00</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.productBox}>
-            <Image
-              source={{
-                uri: 'https://raw.githubusercontent.com/Josimar16/teste-fullstack-mobile/main/images/1%20–%201.png',
-              }}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>
-              Air Jordan 5 Retro 'Raging Bulls' Red 2021
-            </Text>
-            <Text style={styles.productAmount}>R$ 820,00</Text>
-          </TouchableOpacity>
+          {products.map((product, key) => (
+            <TouchableOpacity style={styles.productBox} key={key}>
+              <Image
+                source={{
+                  uri: product.url_image,
+                }}
+                style={styles.productImage}
+              />
+              <Text style={styles.productName}>{product.name}</Text>
+              <Text style={styles.productAmount}>R$ {product.amount}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
     </View>

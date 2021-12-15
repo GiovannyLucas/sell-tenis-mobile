@@ -22,6 +22,10 @@ export const styles = StyleSheet.create({
   categoryButton: {
     margin: 10,
   },
+  selectedCategoryButton: {
+    margin: 10,
+    borderBottomWidth: 1,
+  },
   brandsBox: {},
   brandButton: {
     margin: 10,
