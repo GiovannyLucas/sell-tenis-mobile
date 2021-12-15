@@ -22,20 +22,20 @@ export const database: TypeOrmModuleOptions = {
       '*',
     ),
   ],
-  migrations: [
-    resolve(__dirname, '..', 'shared', 'infra', 'typeorm', 'migrations', '*'),
-  ],
-  cli: {
-    migrationsDir: resolve(
-      __dirname,
-      '..',
-      'shared',
-      'infra',
-      'typeorm',
-      'migrations',
-    ),
-  },
-  migrationsRun: true,
-  synchronize: false,
+  // migrations: [
+  //   resolve(__dirname, '..', 'shared', 'infra', 'typeorm', 'migrations', '*'),
+  // ],
+  // cli: {
+  //   migrationsDir: resolve(
+  //     __dirname,
+  //     '..',
+  //     'shared',
+  //     'infra',
+  //     'typeorm',
+  //     'migrations',
+  //   ),
+  // },
+  // migrationsRun: true,
+  synchronize: true,
   logging: ['error', 'warn'],
 };
