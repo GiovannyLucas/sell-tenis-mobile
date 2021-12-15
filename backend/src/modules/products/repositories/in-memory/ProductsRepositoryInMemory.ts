@@ -37,8 +37,8 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
     },
     {
       id: uuid(),
-      name: 'Air Max 500',
-      description: 'Tenis Nike Pro Max 500',
+      name: 'Air Max 600',
+      description: 'Tenis Nike Pro Max 600',
       amount: 500,
       categories: ['tenis', 'sapatenis', 'corrida'],
       brand: 'Adidas',
@@ -60,10 +60,10 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
     categories: string[];
     brands: string[];
   }> {
-    const name: string | null = filters?.name || null;
-    const description: string | null = filters?.description || null;
-    const brand: string | null = filters?.brand || null;
-    const category: string | null = filters?.category || null;
+    const name: string = filters?.name || '';
+    const description: string = filters?.description || '';
+    const brand: string = filters?.brand || '';
+    const category: string = filters?.category || '';
 
     const productsByName = this.products.filter((product) =>
       product.name.includes(name),
@@ -73,9 +73,14 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
       product.description.includes(description),
     );
 
-    const products = productsByDescription.filter(
-      (product) =>
-        product.brand === brand || product.categories.includes(category),
+    const productsByCategory = category
+      ? productsByDescription.filter((product) =>
+          product.categories.includes(category),
+        )
+      : productsByDescription;
+
+    const products = productsByCategory.filter((product) =>
+      product.brand.includes(brand),
     );
 
     const categories = this.products
