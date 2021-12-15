@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import configuration from './config';
+import { ProductsModule } from './modules/products/Products.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import configuration from './config';
       useFactory: (config: ConfigService) =>
         config.get<TypeOrmModuleOptions>('database'),
     }),
+    ProductsModule,
   ],
 })
 export class AppModule {}
