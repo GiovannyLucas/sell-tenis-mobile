@@ -3,7 +3,7 @@
 /node_modules
 
 # delicate files
-/src/config/database.ts
+# /src/config/database.ts
 
 # Logs
 logs
