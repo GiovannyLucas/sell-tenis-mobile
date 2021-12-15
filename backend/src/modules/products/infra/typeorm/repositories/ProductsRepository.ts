@@ -53,17 +53,13 @@ export class ProductsRepository implements IProductsRepository {
       .orderBy({ name: 'ASC' })
       .getManyAndCount();
 
-    const categories = await this.repository
-      .createQueryBuilder()
-      .distinct()
-      .select('categories')
-      .getRawOne();
+    const [{ categories }] = await this.repository.query(
+      'SELECT array_agg(distinct category) categories FROM products, unnest(categories) category',
+    );
 
-    const brands = await this.repository
-      .createQueryBuilder()
-      .distinct()
-      .select('brand')
-      .getRawOne();
+    const [{ brands }] = await this.repository.query(
+      'SELECT array_agg(DISTINCT brand) brands FROM products',
+    );
 
     return { products, total, categories, brands };
   }

@@ -18,7 +18,7 @@ export class Product {
   @Column({ type: 'character varying' })
   description: string;
 
-  @Column({ type: 'decimal', precision: 2 })
+  @Column({ type: 'decimal' })
   amount: number;
 
   @Column({ type: 'character varying', array: true })
@@ -27,7 +27,7 @@ export class Product {
   @Column({ type: 'character varying' })
   brand: string;
 
-  @Column({ type: 'decimal', precision: 2 })
+  @Column({ type: 'decimal' })
   size: number;
 
   @Column({ type: 'integer' })
