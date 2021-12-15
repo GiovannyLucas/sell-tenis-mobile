@@ -50,8 +50,8 @@ export const ProductDetailsPage = ({ route }: Props) => {
 
       <View>
         <View style={styles.categoriesBox}>
-          {product?.categories.map(category => (
-            <View style={styles.categoryBox}>
+          {product?.categories.map((category, key) => (
+            <View key={key} style={styles.categoryBox}>
               <Text style={styles.categoryText}>{category}</Text>
             </View>
           ))}
@@ -88,7 +88,16 @@ export const ProductDetailsPage = ({ route }: Props) => {
       </View>
 
       <View style={styles.centralize}>
-        <TouchableOpacity style={styles.buyButton}>
+        <TouchableOpacity
+          style={styles.buyButton}
+          onPress={() =>
+            navigation.navigate('MakeOrder', {
+              product_id: product?.id,
+              product_image_url: product?.url_image,
+              product_amount: product?.amount,
+              product_size: product?.size,
+            })
+          }>
           <View style={styles.alignRight}>
             <Text style={styles.titleAmountSize}>COMPRAR</Text>
             <Text style={styles.subtitleAmountSize}>LANCE</Text>
