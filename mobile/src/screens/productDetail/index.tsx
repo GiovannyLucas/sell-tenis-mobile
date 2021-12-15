@@ -50,8 +50,8 @@ export const ProductDetailsPage = ({ route }: Props) => {
 
       <View>
         <View style={styles.categoriesBox}>
-          {product?.categories.map(category => (
-            <View style={styles.categoryBox}>
+          {product?.categories.map((category, key) => (
+            <View key={key} style={styles.categoryBox}>
               <Text style={styles.categoryText}>{category}</Text>
             </View>
           ))}
