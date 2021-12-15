@@ -1,8 +1,9 @@
-import { CreateOrderDTO } from 'src/modules/orders/dtos/CreateOrderDTO';
-import { IOrdersRepository } from 'src/modules/orders/repositories/IOrdersRepository';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, EntityRepository, Repository } from 'typeorm';
+import { CreateOrderDTO } from '../../../dtos/CreateOrderDTO';
+import { IOrdersRepository } from '../../../repositories/IOrdersRepository';
 import { Order } from '../entities/Order';
 
+@EntityRepository(Order)
 export class OrdersRepository implements IOrdersRepository {
   private repository: Repository<Order>;
 
