@@ -64,7 +64,9 @@ export class ProductsRepository implements IProductsRepository {
     return { products, total, categories, brands };
   }
 
-  show(id: string): Promise<Product> {
-    throw new Error('Method not implemented.');
+  async show(id: string): Promise<Product> {
+    const product = await this.repository.findOne(id);
+
+    return product;
   }
 }

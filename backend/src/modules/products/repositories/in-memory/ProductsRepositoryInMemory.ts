@@ -6,7 +6,7 @@ import { FilterProductsDTO } from '../../dtos/FilterProductsDTO';
 export class ProductsRepositoryInMemory implements IProductsRepository {
   private products: Product[] = [
     {
-      id: uuid(),
+      id: 'e1e6dee0-dff6-4c5a-afb7-dacf49f60903',
       name: 'Air Max',
       description: 'Tenis Nike Air Max',
       amount: 500,
@@ -92,7 +92,9 @@ export class ProductsRepositoryInMemory implements IProductsRepository {
     return { products, total: products.length, categories, brands };
   }
 
-  show(id: string): Promise<Product> {
-    throw new Error('Method not implemented.');
+  async show(id: string): Promise<Product> {
+    const product = this.products.find((product) => product.id === id);
+
+    return product;
   }
 }
