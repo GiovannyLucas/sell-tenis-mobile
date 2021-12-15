@@ -13,6 +13,8 @@ export const createOrder = (product_id: string) => {
     api
       .post<Order>('/orders', { product_id })
       .then(response => {
+        console.log(response.data);
+
         resolve(response.data);
       })
       .catch(reject);

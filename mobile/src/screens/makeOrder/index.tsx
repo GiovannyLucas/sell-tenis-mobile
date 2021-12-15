@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { createOrder } from '../../services/api/orders';
 import { styles } from './styles';
 
 interface Props {
@@ -13,6 +14,18 @@ export const MakeOrderPage = ({ route }: Props) => {
     route.params;
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    async function call() {
+      try {
+        await createOrder(product_id);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    call();
+  });
 
   return (
     <View style={styles.container}>
