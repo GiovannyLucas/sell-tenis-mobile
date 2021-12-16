@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {
   View,
   Text,
@@ -24,6 +25,16 @@ export const ProductsPage = () => {
   const [brands, setBrands] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [, setTotal] = useState<number>(0);
+
+  // useEffect(() => {
+  //   // SplashScreen.show();
+
+  //   // setTimeout(() => {
+  //   //   console.log('entrou em Thiago');
+
+  //   // }, 1000);
+  //   SplashScreen.hide();
+  // });
 
   useEffect(() => {
     async function call() {
