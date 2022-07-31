@@ -1,6 +1,4 @@
-# certsys-fullstack-mobile
-The fullstack mobile apply to Certsys.
-
+# sell-tenis-mobile
 
 ## Endpoints API 📡
 `http://localhost:4000`
